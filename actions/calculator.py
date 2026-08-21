@@ -22,6 +22,7 @@ class TeamRecord:
     game_behind: float = 0.0
     rank: Optional[int] = None
     team_code: Optional[str] = None
+    streak: Optional[str] = None
 
 
 def win_rate(wins: int, losses: int) -> Fraction:
@@ -172,6 +173,7 @@ def build_result_payload(
                     "draws": t.draws,
                     "gamesBehind": t.game_behind,
                     "remainingGames": t.remaining_games,
+                    "streak": t.streak,
                 }
                 for t in standings
             ]

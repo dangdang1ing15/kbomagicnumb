@@ -109,7 +109,7 @@ def fetch_remaining_schedule(from_date: date, to_date: date, size: int = 500) ->
     result = _get(
         f"{BASE_URL}/schedule/games",
         params={
-            "fields": "basic,superSchedule",
+            "fields": "basic,superSchedule,stadium",
             "categoryId": "kbo",
             "fromDate": from_date.strftime("%Y-%m-%d"),
             "toDate": to_date.strftime("%Y-%m-%d"),
@@ -127,6 +127,8 @@ def fetch_remaining_schedule(from_date: date, to_date: date, size: int = 500) ->
                 "awayTeamCode": g.get("awayTeamCode"),
                 "homeTeamName": g.get("homeTeamName"),
                 "awayTeamName": g.get("awayTeamName"),
+                "stadium": g.get("stadium"),
+                "statusCode": g.get("statusCode"),
             }
         )
     return games
@@ -150,6 +152,7 @@ def fetch_standings(season: int) -> list[dict]:
                 "gamesPlayed": games_played,
                 "remainingGames": max(0, total_games - games_played),
                 "gameBehind": t.get("gameBehind", 0.0),
+                "streak": t.get("continuousGameResult"),
             }
         )
     teams.sort(key=lambda t: (t["rank"] is None, t["rank"]))
@@ -196,4 +199,5 @@ def _to_team_record(team: dict) -> TeamRecord:
         game_behind=team["gameBehind"],
         rank=team["rank"],
         team_code=team["teamId"],
+        streak=team.get("streak"),
     )
