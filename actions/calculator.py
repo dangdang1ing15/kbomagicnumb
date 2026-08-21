@@ -106,6 +106,7 @@ def build_magic_number_table(standings: list[TeamRecord]) -> list[dict]:
         table.append(
             {
                 "team": team.name,
+                "teamCode": team.team_code,
                 "rank": team.rank,
                 "wins": team.wins,
                 "losses": team.losses,
@@ -141,6 +142,7 @@ def build_result_payload(
         "season": season,
         "targetTeam": {
             "name": target.name,
+            "teamCode": target.team_code,
             "rank": target.rank,
             "wins": target.wins,
             "losses": target.losses,
@@ -151,6 +153,7 @@ def build_result_payload(
         },
         "runnerUpTeam": {
             "name": chaser.name,
+            "teamCode": chaser.team_code,
             "rank": chaser.rank,
             "wins": chaser.wins,
             "losses": chaser.losses,
