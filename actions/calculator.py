@@ -167,6 +167,7 @@ def build_result_payload(
             [
                 {
                     "team": t.name,
+                    "teamCode": t.team_code,
                     "rank": t.rank,
                     "wins": t.wins,
                     "losses": t.losses,
