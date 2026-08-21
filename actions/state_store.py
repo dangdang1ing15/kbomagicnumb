@@ -19,6 +19,7 @@ def _default_state(today: str) -> dict:
     return {
         "date": today,
         "gameStartNotified": False,
+        "targetTeamResultNotified": False,
         "allFinishedNotified": False,
         "lastMagicNumber": None,
     }
@@ -30,7 +31,9 @@ def load_state(repo: str, token: str, path: str = DEFAULT_STATE_PATH, branch: st
     state = github_deployer.download_json(repo, path, token, branch=branch)
     if state is None or state.get("date") != today:
         return _default_state(today)
-    return state
+    # Merge onto defaults so a schema change (new field added) doesn't KeyError
+    # against a state.json written by an older deploy earlier the same day.
+    return {**_default_state(today), **state}
 
 
 def save_state(repo: str, token: str, state: dict, path: str = DEFAULT_STATE_PATH, branch: str = "main") -> None:

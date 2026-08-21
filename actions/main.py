@@ -50,6 +50,12 @@ def _summarize_today(games: list[dict]) -> str:
     return ", ".join(parts) if parts else "경기 진행 중입니다."
 
 
+def _find_team_game(games: list[dict], team_code: Optional[str]) -> Optional[dict]:
+    if not team_code:
+        return None
+    return next((g for g in games if team_code in (g["homeTeamCode"], g["awayTeamCode"])), None)
+
+
 @functions_framework.http
 def magic_number_pipeline(request):
     github_repo = _env("GITHUB_REPO", required=True)
@@ -60,11 +66,17 @@ def magic_number_pipeline(request):
     season = int(_env("KBO_SEASON", str(date.today().year)))
     target_team_code = _env("TARGET_TEAM_CODE") or None
     head_to_head_advantage = _env("HEAD_TO_HEAD_ADVANTAGE", "false").lower() == "true"
+    season_end_date = date.fromisoformat(_env("KBO_SEASON_END_DATE", f"{season}-10-05"))
 
     today = datetime.now(KST).date()
     games = crawler.fetch_games(today)
     state = state_store.load_state(github_repo, github_token, path=state_path, branch=branch)
     state_changed = False
+
+    # Standings are needed every invocation (not just once all games finish)
+    # so we can identify which of today's games belongs to the target team.
+    standings = crawler.fetch_standings(season)
+    target, chaser = crawler.get_target_and_chaser(standings, target_team_code)
 
     started = any(g["statusCode"] in STARTED_STATUSES for g in games)
     if started and not state["gameStartNotified"]:
@@ -72,13 +84,32 @@ def magic_number_pipeline(request):
         state["gameStartNotified"] = True
         state_changed = True
 
+    target_game = _find_team_game(games, target.team_code)
+    if (
+        target_game
+        and target_game["statusCode"] == "RESULT"
+        and not state["targetTeamResultNotified"]
+    ):
+        is_home = target_game["homeTeamCode"] == target.team_code
+        team_score = target_game["homeScore"] if is_home else target_game["awayScore"]
+        opponent_score = target_game["awayScore"] if is_home else target_game["homeScore"]
+        winning_side = "HOME" if is_home else "AWAY"
+        won = target_game["winner"] == winning_side
+        notifier.send_target_team_result_push(target.name, won, team_score, opponent_score)
+        state["targetTeamResultNotified"] = True
+        state_changed = True
+
     all_finished = bool(games) and all(g["statusCode"] in FINISHED_STATUSES for g in games)
     has_cancelled = any(g["statusCode"] == "CANCEL" for g in games)
 
     if all_finished and not state["allFinishedNotified"]:
-        standings = crawler.fetch_standings(season)
-        target, chaser = crawler.get_target_and_chaser(standings, target_team_code)
         magic_number = calculator.compute_magic_number(target, chaser, head_to_head_advantage)
+        magic_number_table = calculator.build_magic_number_table(
+            crawler.to_team_records(standings)
+        )
+        remaining_schedule = crawler.fetch_remaining_schedule(
+            today + timedelta(days=1), season_end_date
+        )
 
         payload = calculator.build_result_payload(
             season=season,
@@ -89,6 +120,9 @@ def magic_number_pipeline(request):
             has_cancelled=has_cancelled,
             summary=_summarize_today(games),
             updated_at_iso=datetime.now(KST).isoformat(),
+            standings=crawler.to_team_records(standings),
+            magic_number_table=magic_number_table,
+            remaining_schedule=remaining_schedule,
         )
 
         github_deployer.upload_json(

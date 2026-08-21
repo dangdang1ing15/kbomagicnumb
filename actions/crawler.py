@@ -81,6 +81,8 @@ def fetch_games(target_date: date) -> list[dict]:
             {
                 "gameId": g.get("gameId"),
                 "gameDateTime": g.get("gameDateTime"),
+                "homeTeamCode": g.get("homeTeamCode"),
+                "awayTeamCode": g.get("awayTeamCode"),
                 "homeTeamName": g.get("homeTeamName"),
                 "awayTeamName": g.get("awayTeamName"),
                 "homeScore": g.get("homeTeamScore"),
@@ -90,6 +92,41 @@ def fetch_games(target_date: date) -> list[dict]:
                 "winner": g.get("winner"),
                 "cancelled": bool(g.get("cancel")),
                 "suspended": bool(g.get("suspended")),
+            }
+        )
+    return games
+
+
+def fetch_remaining_schedule(from_date: date, to_date: date, size: int = 500) -> list[dict]:
+    """
+    Fetch all KBO games scheduled in [from_date, to_date], normalized like
+    `fetch_games`. The endpoint silently caps `games` at ~10 entries per page
+    regardless of date range unless `size` is passed explicitly (verified
+    live: a ~6-week range returned only 10/157 games without it) -- `size`
+    is set generously above any realistic remaining-game count so the whole
+    range comes back in one call with no pagination logic needed.
+    """
+    result = _get(
+        f"{BASE_URL}/schedule/games",
+        params={
+            "fields": "basic,superSchedule",
+            "categoryId": "kbo",
+            "fromDate": from_date.strftime("%Y-%m-%d"),
+            "toDate": to_date.strftime("%Y-%m-%d"),
+            "size": size,
+        },
+    )
+    games = []
+    for g in result.get("games", []):
+        games.append(
+            {
+                "gameId": g.get("gameId"),
+                "gameDate": g.get("gameDate"),
+                "gameDateTime": g.get("gameDateTime"),
+                "homeTeamCode": g.get("homeTeamCode"),
+                "awayTeamCode": g.get("awayTeamCode"),
+                "homeTeamName": g.get("homeTeamName"),
+                "awayTeamName": g.get("awayTeamName"),
             }
         )
     return games
@@ -144,6 +181,11 @@ def get_target_and_chaser(
     return _to_team_record(standings[idx]), _to_team_record(standings[idx + 1])
 
 
+def to_team_records(standings: list[dict]) -> list[TeamRecord]:
+    """Convert the full normalized standings list to TeamRecord objects, in rank order."""
+    return [_to_team_record(t) for t in standings]
+
+
 def _to_team_record(team: dict) -> TeamRecord:
     return TeamRecord(
         name=team["teamName"],
@@ -153,4 +195,5 @@ def _to_team_record(team: dict) -> TeamRecord:
         remaining_games=team["remainingGames"],
         game_behind=team["gameBehind"],
         rank=team["rank"],
+        team_code=team["teamId"],
     )

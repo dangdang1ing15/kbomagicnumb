@@ -1,8 +1,33 @@
 # KBO 매직넘버 백엔드 파이프라인 (Phase 1~2)
 
 네이버 스포츠 비공식 API로 KBO 경기 상태/순위를 크롤링하고, 매직넘버를 계산해
-`magic_number.json`을 GitHub Pages 저장소에 커밋하며, 경기 시작/종료 시 FCM
-푸시를 보내는 GCP Cloud Functions(2nd gen) 파이프라인.
+`magic_number.json`을 GitHub Pages 저장소에 커밋하며, 경기 시작/응원팀 경기 종료/
+전체 경기 종료 시 FCM 푸시를 보내는 GCP Cloud Functions(2nd gen) 파이프라인.
+
+## 푸시 알림 (FCM 토픽 3개)
+
+| 시점 | 토픽 | 내용 |
+|---|---|---|
+| 오늘 경기 중 하나라도 시작 | `kbo-magic-number-start` | "게임이 시작되었어요! 과연 매직넘버는 어떻게 갱신될까요?" |
+| 응원팀(target team) 경기 종료 | `kbo-magic-number-team-result` | "내 팀이 승리/패배했어요! 다른 팀들의 경기가 다 끝나면 매직넘버를 알려드릴게요." (`data`에 `team_name`/`won`) |
+| 오늘 모든 경기 종료 | `kbo-magic-number-end` | "모든 경기가 다 끝났어요! 갱신된 매직넘버를 확인해주세요." (`data`에 `reload_widget`/`magic_number`) |
+
+각 토픽은 하루 1회만 발송되도록 `state.json`으로 중복을 막는다. 취소된 응원팀
+경기는 승패가 없어 2번째 푸시를 보내지 않는다 (전체 종료 푸시에는 포함됨).
+
+## 앱 버전 게이트 (Firebase Remote Config)
+
+강제 업데이트는 이 파이프라인이 아니라 **Firebase Remote Config**로 처리한다
+(저장소 루트의 `firebase.json`/`.firebaserc`/`remoteconfig.template.json`).
+파라미터 3개: `minimum_supported_version`, `latest_version`, `force_update_message`.
+클라이언트 앱이 시작 시 Remote Config를 fetch해서 자기 버전과
+`minimum_supported_version`을 비교해 차단하는 로직은 앱 구현 범위 (이 저장소는
+값만 서빙).
+
+```bash
+firebase deploy --only remoteconfig --project kbomagicnumb-28129
+firebase remoteconfig:get --project kbomagicnumb-28129   # 반영 확인
+```
 
 ## 디렉토리 구조
 
@@ -15,6 +40,16 @@
 | `state_store.py` | GitHub에 커밋된 `state.json`을 통한 상태머신 저장/조회. |
 | `notifier.py` | firebase-admin으로 FCM 토픽 발송. |
 | `tests/test_calculator.py` | 매직넘버 로직 단위 테스트 (`python -m pytest tests/`). |
+
+## `magic_number.json` 확장 필드 (전체 경기 종료 시에만 채워짐)
+
+`targetTeam`/`runnerUpTeam`/`todayGamesStatus`는 항상 갱신되고, 아래 3개는
+오늘 모든 경기가 끝난 순간(하루 1회)에만 값이 채워진다 — 로컬에서 매직넘버
+경우의 수를 재계산할 수 있도록 원본에 가까운 데이터를 실어보낸다:
+
+- `standings`: 전체 10개 팀 순위표 (`team`, `rank`, `wins`, `losses`, `draws`, `gamesBehind`, `remainingGames`).
+- `magicNumberTable`: 순위 인접쌍(1-2위, 2-3위, ...)마다 계산한 매직넘버 배열. 마지막 팀은 `magicNumber`/`chasingTeam`이 `null`. `HEAD_TO_HEAD_ADVANTAGE`는 target/chaser 쌍에만 반영되고 나머지 쌍은 근사치.
+- `remainingSchedule`: 오늘 이후 ~ `KBO_SEASON_END_DATE`까지 전체 팀의 남은 경기 목록 (`gameDate`, `homeTeamCode`, `awayTeamCode` 등). 특정 팀으로 좁히지 않음 — `TARGET_TEAM_CODE`를 나중에 바꿔도 그대로 재사용 가능.
 
 ## 알려진 제약사항
 
@@ -42,7 +77,8 @@
 | `TARGET_TEAM_CODE` | X | (1위 팀) | 특정 팀 기준으로 매직넘버 계산 (예: `LG`) |
 | `KBO_SEASON` | X | 현재 연도 | 순위표 조회 시즌 |
 | `KBO_TOTAL_GAMES` | X | `144` | 팀당 정규시즌 총 경기 수 |
-| `HEAD_TO_HEAD_ADVANTAGE` | X | `false` | `true`시 동률 승률도 우승 확정으로 처리 |
+| `KBO_SEASON_END_DATE` | X | `{KBO_SEASON}-10-05` | 잔여 경기 일정 조회 상한일 (정규시즌 종료 근사치) |
+| `HEAD_TO_HEAD_ADVANTAGE` | X | `false` | `true`시 동률 승률도 우승 확정으로 처리 (target/chaser 쌍에만 적용, `magicNumberTable`의 다른 쌍에는 미적용) |
 
 Secret Manager로 민감값(`GITHUB_TOKEN`, `FIREBASE_CREDENTIALS`) 관리:
 

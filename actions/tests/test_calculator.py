@@ -3,7 +3,7 @@ import sys
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
-from calculator import TeamRecord, compute_magic_number  # noqa: E402
+from calculator import TeamRecord, build_magic_number_table, compute_magic_number  # noqa: E402
 
 
 def test_typical_race_matches_classic_formula():
@@ -39,6 +39,22 @@ def test_magic_number_never_negative():
     target = TeamRecord(name="A", wins=120, losses=10, draws=0, remaining_games=14, rank=1)
     chaser = TeamRecord(name="B", wins=50, losses=80, draws=0, remaining_games=14, rank=2)
     assert compute_magic_number(target, chaser) == 0
+
+
+def test_magic_number_table_computes_each_adjacent_pair():
+    # All four teams share the same 144-game pace (wins+losses+remaining=144),
+    # which makes the arithmetic land on clean integers -- hand-verified below.
+    teams = [
+        TeamRecord(name="A", wins=70, losses=50, draws=0, remaining_games=24, rank=1),
+        TeamRecord(name="B", wins=65, losses=55, draws=0, remaining_games=24, rank=2),
+        TeamRecord(name="C", wins=60, losses=60, draws=0, remaining_games=24, rank=3),
+        TeamRecord(name="D", wins=50, losses=70, draws=0, remaining_games=24, rank=4),
+    ]
+    table = build_magic_number_table(teams)
+
+    assert [row["magicNumber"] for row in table] == [20, 20, 15, None]
+    assert [row["chasingTeam"] for row in table] == ["B", "C", "D", None]
+    assert table[0]["team"] == "A" and table[0]["rank"] == 1
 
 
 if __name__ == "__main__":

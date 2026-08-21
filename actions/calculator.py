@@ -21,6 +21,7 @@ class TeamRecord:
     remaining_games: int
     game_behind: float = 0.0
     rank: Optional[int] = None
+    team_code: Optional[str] = None
 
 
 def win_rate(wins: int, losses: int) -> Fraction:
@@ -78,6 +79,43 @@ def compute_magic_number(
     return max(0, x_min)
 
 
+def build_magic_number_table(standings: list[TeamRecord]) -> list[dict]:
+    """
+    Magic number for every team in the standings to finish above the team
+    directly below it, computed pairwise by reusing `compute_magic_number`
+    along each adjacent rank boundary (1st-vs-2nd, 2nd-vs-3rd, ...).
+
+    Head-to-head tiebreaker correction is not applied here (the Naver
+    endpoints don't expose head-to-head records for arbitrary pairs, only
+    the single target/chaser pair the caller may know about out-of-band via
+    HEAD_TO_HEAD_ADVANTAGE) -- treat this table as an approximation for any
+    pair where the two teams have already split their season series evenly.
+    The last-ranked team has no one below it, so it's included with a null
+    magicNumber/chasingTeam.
+    """
+    table = []
+    for i, team in enumerate(standings):
+        if i + 1 < len(standings):
+            chaser = standings[i + 1]
+            magic_number = compute_magic_number(team, chaser)
+            chasing_team = chaser.name
+        else:
+            magic_number = None
+            chasing_team = None
+        table.append(
+            {
+                "team": team.name,
+                "rank": team.rank,
+                "wins": team.wins,
+                "losses": team.losses,
+                "draws": team.draws,
+                "magicNumber": magic_number,
+                "chasingTeam": chasing_team,
+            }
+        )
+    return table
+
+
 def build_result_payload(
     season: int,
     target: TeamRecord,
@@ -87,8 +125,16 @@ def build_result_payload(
     has_cancelled: bool,
     summary: str,
     updated_at_iso: str,
+    standings: Optional[list[TeamRecord]] = None,
+    magic_number_table: Optional[list[dict]] = None,
+    remaining_schedule: Optional[list[dict]] = None,
 ) -> dict:
-    """Assemble the magic_number.json payload matching the published schema."""
+    """Assemble the magic_number.json payload matching the published schema.
+
+    `standings`/`magic_number_table`/`remaining_schedule` are only populated
+    once all of today's games have finished (see main.py) so local clients
+    can recompute magic-number scenarios without re-crawling Naver.
+    """
     return {
         "updatedAt": updated_at_iso,
         "season": season,
@@ -116,4 +162,22 @@ def build_result_payload(
             "hasCancelled": has_cancelled,
             "summary": summary,
         },
+        "standings": (
+            [
+                {
+                    "team": t.name,
+                    "rank": t.rank,
+                    "wins": t.wins,
+                    "losses": t.losses,
+                    "draws": t.draws,
+                    "gamesBehind": t.game_behind,
+                    "remainingGames": t.remaining_games,
+                }
+                for t in standings
+            ]
+            if standings is not None
+            else None
+        ),
+        "magicNumberTable": magic_number_table,
+        "remainingSchedule": remaining_schedule,
     }
