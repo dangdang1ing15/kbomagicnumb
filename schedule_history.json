@@ -6953,5 +6953,62 @@
       "statusCode": "RESULT",
       "winner": "HOME"
     }
+  ],
+  "2026-08-25": [
+    {
+      "gameId": "20260825HHSK02026",
+      "homeTeamCode": "SK",
+      "awayTeamCode": "HH",
+      "homeTeamName": "SSG",
+      "awayTeamName": "한화",
+      "homeScore": 7,
+      "awayScore": 1,
+      "statusCode": "RESULT",
+      "winner": "HOME"
+    },
+    {
+      "gameId": "20260825LTHT02026",
+      "homeTeamCode": "HT",
+      "awayTeamCode": "LT",
+      "homeTeamName": "KIA",
+      "awayTeamName": "롯데",
+      "homeScore": 8,
+      "awayScore": 5,
+      "statusCode": "RESULT",
+      "winner": "HOME"
+    },
+    {
+      "gameId": "20260825NCLG02026",
+      "homeTeamCode": "LG",
+      "awayTeamCode": "NC",
+      "homeTeamName": "LG",
+      "awayTeamName": "NC",
+      "homeScore": 5,
+      "awayScore": 4,
+      "statusCode": "RESULT",
+      "winner": "HOME"
+    },
+    {
+      "gameId": "20260825OBKT02026",
+      "homeTeamCode": "KT",
+      "awayTeamCode": "OB",
+      "homeTeamName": "KT",
+      "awayTeamName": "두산",
+      "homeScore": 1,
+      "awayScore": 3,
+      "statusCode": "RESULT",
+      "winner": "AWAY"
+    },
+    {
+      "gameId": "20260825SSWO02026",
+      "homeTeamCode": "WO",
+      "awayTeamCode": "SS",
+      "homeTeamName": "키움",
+      "awayTeamName": "삼성",
+      "homeScore": 3,
+      "awayScore": 3,
+      "statusCode": "RESULT",
+      "winner": "DRAW"
+    }
   ]
 }
