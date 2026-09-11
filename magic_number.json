@@ -1,54 +1,54 @@
 {
-  "updatedAt": "2026-09-10T22:10:04.708250+09:00",
+  "updatedAt": "2026-09-11T22:32:04.664667+09:00",
   "season": 2026,
   "targetTeam": {
-    "name": "삼성",
-    "teamCode": "SS",
+    "name": "KT",
+    "teamCode": "KT",
     "rank": 1,
     "wins": 73,
-    "losses": 47,
+    "losses": 46,
     "draws": 3,
-    "remainingGames": 21,
-    "magicNumber": 23,
+    "remainingGames": 22,
+    "magicNumber": 22,
     "tragicNumber": null
   },
   "runnerUpTeam": {
-    "name": "KT",
-    "teamCode": "KT",
+    "name": "삼성",
+    "teamCode": "SS",
     "rank": 2,
-    "wins": 71,
-    "losses": 46,
+    "wins": 74,
+    "losses": 47,
     "draws": 3,
-    "remainingGames": 24,
-    "gamesBehind": 0.5
+    "remainingGames": 20,
+    "gamesBehind": 0.0
   },
   "todayGamesStatus": {
     "isAllFinished": true,
     "hasCancelled": false,
-    "summary": "SSG 4:3 한화, 롯데 3:16 KT, KIA 1:2 NC, 두산 5:0 키움"
+    "summary": "롯데 1:7 KT, 한화 7:9 NC, KIA 5:2 SSG, 삼성 6:4 키움"
   },
   "standings": [
     {
-      "team": "삼성",
-      "teamCode": "SS",
+      "team": "KT",
+      "teamCode": "KT",
       "rank": 1,
       "wins": 73,
+      "losses": 46,
+      "draws": 3,
+      "gamesBehind": 0.0,
+      "remainingGames": 22,
+      "streak": "4승"
+    },
+    {
+      "team": "삼성",
+      "teamCode": "SS",
+      "rank": 2,
+      "wins": 74,
       "losses": 47,
       "draws": 3,
       "gamesBehind": 0.0,
-      "remainingGames": 21,
-      "streak": "1패"
-    },
-    {
-      "team": "KT",
-      "teamCode": "KT",
-      "rank": 2,
-      "wins": 71,
-      "losses": 46,
-      "draws": 3,
-      "gamesBehind": 0.5,
-      "remainingGames": 24,
-      "streak": "2승"
+      "remainingGames": 20,
+      "streak": "1승"
     },
     {
       "team": "LG",
@@ -57,7 +57,7 @@
       "wins": 68,
       "losses": 55,
       "draws": 1,
-      "gamesBehind": 6.5,
+      "gamesBehind": 7.0,
       "remainingGames": 20,
       "streak": "4패"
     },
@@ -65,12 +65,12 @@
       "team": "KIA",
       "teamCode": "HT",
       "rank": 4,
-      "wins": 66,
-      "losses": 54,
+      "wins": 67,
+      "losses": 55,
       "draws": 2,
-      "gamesBehind": 7.0,
-      "remainingGames": 22,
-      "streak": "2패"
+      "gamesBehind": 7.5,
+      "remainingGames": 20,
+      "streak": "1승"
     },
     {
       "team": "두산",
@@ -79,7 +79,7 @@
       "wins": 63,
       "losses": 59,
       "draws": 4,
-      "gamesBehind": 11.0,
+      "gamesBehind": 11.5,
       "remainingGames": 18,
       "streak": "1승"
     },
@@ -87,77 +87,77 @@
       "team": "NC",
       "teamCode": "NC",
       "rank": 6,
-      "wins": 56,
+      "wins": 58,
       "losses": 60,
       "draws": 2,
-      "gamesBehind": 15.0,
-      "remainingGames": 26,
-      "streak": "1승"
+      "gamesBehind": 14.5,
+      "remainingGames": 24,
+      "streak": "3승"
     },
     {
       "team": "한화",
       "teamCode": "HH",
       "rank": 7,
       "wins": 54,
-      "losses": 66,
+      "losses": 67,
       "draws": 3,
-      "gamesBehind": 19.0,
-      "remainingGames": 21,
-      "streak": "1패"
+      "gamesBehind": 20.0,
+      "remainingGames": 20,
+      "streak": "2패"
     },
     {
       "team": "SSG",
       "teamCode": "SK",
       "rank": 8,
       "wins": 54,
-      "losses": 68,
+      "losses": 69,
       "draws": 5,
-      "gamesBehind": 20.0,
-      "remainingGames": 17,
-      "streak": "2승"
+      "gamesBehind": 21.0,
+      "remainingGames": 16,
+      "streak": "1패"
     },
     {
       "team": "롯데",
       "teamCode": "LT",
       "rank": 9,
       "wins": 52,
-      "losses": 66,
+      "losses": 68,
       "draws": 2,
-      "gamesBehind": 20.0,
-      "remainingGames": 24,
-      "streak": "1승"
+      "gamesBehind": 21.5,
+      "remainingGames": 22,
+      "streak": "2패"
     },
     {
       "team": "키움",
       "teamCode": "WO",
       "rank": 10,
       "wins": 45,
-      "losses": 81,
+      "losses": 82,
       "draws": 3,
-      "gamesBehind": 31.0,
-      "remainingGames": 15,
-      "streak": "1패"
+      "gamesBehind": 32.0,
+      "remainingGames": 14,
+      "streak": "2패"
     }
   ],
   "magicNumberTable": [
     {
-      "team": "삼성",
-      "teamCode": "SS",
-      "rank": 1,
-      "wins": 73,
-      "losses": 47,
-      "draws": 3,
-      "magicNumber": 23,
-      "chasingTeam": "KT"
-    },
-    {
       "team": "KT",
       "teamCode": "KT",
-      "rank": 2,
-      "wins": 71,
+      "rank": 1,
+      "wins": 73,
       "losses": 46,
       "draws": 3,
-      "magicNumber": 16,
+      "magicNumber": 22,
+      "chasingTeam": "삼성"
+    },
+    {
+      "team": "삼성",
+      "teamCode": "SS",
+      "rank": 2,
+      "wins": 74,
+      "losses": 47,
+      "draws": 3,
+      "magicNumber": 13,
       "chasingTeam": "LG"
     },
     {
@@ -167,17 +167,17 @@
       "wins": 68,
       "losses": 55,
       "draws": 1,
-      "magicNumber": 21,
+      "magicNumber": 20,
       "chasingTeam": "KIA"
     },
     {
       "team": "KIA",
       "teamCode": "HT",
       "rank": 4,
-      "wins": 66,
-      "losses": 54,
+      "wins": 67,
+      "losses": 55,
       "draws": 2,
-      "magicNumber": 17,
+      "magicNumber": 16,
       "chasingTeam": "두산"
     },
     {
@@ -194,10 +194,10 @@
       "team": "NC",
       "teamCode": "NC",
       "rank": 6,
-      "wins": 56,
+      "wins": 58,
       "losses": 60,
       "draws": 2,
-      "magicNumber": 20,
+      "magicNumber": 17,
       "chasingTeam": "한화"
     },
     {
@@ -205,9 +205,9 @@
       "teamCode": "HH",
       "rank": 7,
       "wins": 54,
-      "losses": 66,
+      "losses": 67,
       "draws": 3,
-      "magicNumber": 19,
+      "magicNumber": 18,
       "chasingTeam": "SSG"
     },
     {
@@ -215,9 +215,9 @@
       "teamCode": "SK",
       "rank": 8,
       "wins": 54,
-      "losses": 68,
+      "losses": 69,
       "draws": 5,
-      "magicNumber": 21,
+      "magicNumber": 19,
       "chasingTeam": "롯데"
     },
     {
@@ -225,9 +225,9 @@
       "teamCode": "LT",
       "rank": 9,
       "wins": 52,
-      "losses": 66,
+      "losses": 68,
       "draws": 2,
-      "magicNumber": 9,
+      "magicNumber": 8,
       "chasingTeam": "키움"
     },
     {
@@ -235,57 +235,13 @@
       "teamCode": "WO",
       "rank": 10,
       "wins": 45,
-      "losses": 81,
+      "losses": 82,
       "draws": 3,
       "magicNumber": null,
       "chasingTeam": null
     }
   ],
   "remainingSchedule": [
-    {
-      "gameId": "20260911KTLT02026",
-      "gameDate": "2026-09-11",
-      "gameDateTime": "2026-09-11T18:30:00",
-      "homeTeamCode": "LT",
-      "awayTeamCode": "KT",
-      "homeTeamName": "롯데",
-      "awayTeamName": "KT",
-      "stadium": "사직",
-      "statusCode": "BEFORE"
-    },
-    {
-      "gameId": "20260911NCHH02026",
-      "gameDate": "2026-09-11",
-      "gameDateTime": "2026-09-11T18:30:00",
-      "homeTeamCode": "HH",
-      "awayTeamCode": "NC",
-      "homeTeamName": "한화",
-      "awayTeamName": "NC",
-      "stadium": "대전",
-      "statusCode": "BEFORE"
-    },
-    {
-      "gameId": "20260911SKHT02026",
-      "gameDate": "2026-09-11",
-      "gameDateTime": "2026-09-11T18:30:00",
-      "homeTeamCode": "HT",
-      "awayTeamCode": "SK",
-      "homeTeamName": "KIA",
-      "awayTeamName": "SSG",
-      "stadium": "광주",
-      "statusCode": "BEFORE"
-    },
-    {
-      "gameId": "20260911WOSS02026",
-      "gameDate": "2026-09-11",
-      "gameDateTime": "2026-09-11T18:30:00",
-      "homeTeamCode": "SS",
-      "awayTeamCode": "WO",
-      "homeTeamName": "삼성",
-      "awayTeamName": "키움",
-      "stadium": "대구",
-      "statusCode": "BEFORE"
-    },
     {
       "gameId": "20260912HTKT02026",
       "gameDate": "2026-09-12",
