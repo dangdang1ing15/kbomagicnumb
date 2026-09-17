@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-16T22:54:05.385417+09:00",
+  "updatedAt": "2026-09-17T21:38:04.436644+09:00",
   "season": 2026,
   "targetTeam": {
     "name": "KT",
@@ -25,7 +25,7 @@
   "todayGamesStatus": {
     "isAllFinished": true,
     "hasCancelled": false,
-    "summary": "한화 4:4 KT, NC 2:9 LG, 롯데 1:4 SSG, 두산 3:1 삼성"
+    "summary": "NC 1:2 SSG, KIA 2:0 키움"
   },
   "standings": [
     {
@@ -88,22 +88,22 @@
       "teamCode": "NC",
       "rank": 6,
       "wins": 59,
-      "losses": 63,
+      "losses": 64,
       "draws": 2,
-      "gamesBehind": 17.0,
-      "remainingGames": 20,
-      "streak": "3패"
+      "gamesBehind": 17.5,
+      "remainingGames": 19,
+      "streak": "4패"
     },
     {
       "team": "SSG",
       "teamCode": "SK",
       "rank": 7,
-      "wins": 56,
+      "wins": 57,
       "losses": 69,
       "draws": 5,
-      "gamesBehind": 21.5,
-      "remainingGames": 14,
-      "streak": "2승"
+      "gamesBehind": 21.0,
+      "remainingGames": 13,
+      "streak": "3승"
     },
     {
       "team": "한화",
@@ -187,7 +187,7 @@
       "wins": 65,
       "losses": 60,
       "draws": 4,
-      "magicNumber": 13,
+      "magicNumber": 12,
       "chasingTeam": "NC"
     },
     {
@@ -195,7 +195,7 @@
       "teamCode": "NC",
       "rank": 6,
       "wins": 59,
-      "losses": 63,
+      "losses": 64,
       "draws": 2,
       "magicNumber": 13,
       "chasingTeam": "SSG"
@@ -204,10 +204,10 @@
       "team": "SSG",
       "teamCode": "SK",
       "rank": 7,
-      "wins": 56,
+      "wins": 57,
       "losses": 69,
       "draws": 5,
-      "magicNumber": 15,
+      "magicNumber": 14,
       "chasingTeam": "한화"
     },
     {
@@ -242,28 +242,6 @@
     }
   ],
   "remainingSchedule": [
-    {
-      "gameId": "20260917SKNC02026",
-      "gameDate": "2026-09-17",
-      "gameDateTime": "2026-09-17T18:30:00",
-      "homeTeamCode": "NC",
-      "awayTeamCode": "SK",
-      "homeTeamName": "NC",
-      "awayTeamName": "SSG",
-      "stadium": "창원",
-      "statusCode": "BEFORE"
-    },
-    {
-      "gameId": "20260917WOHT02026",
-      "gameDate": "2026-09-17",
-      "gameDateTime": "2026-09-17T18:30:00",
-      "homeTeamCode": "HT",
-      "awayTeamCode": "WO",
-      "homeTeamName": "KIA",
-      "awayTeamName": "키움",
-      "stadium": "광주",
-      "statusCode": "BEFORE"
-    },
     {
       "gameId": "20260918LGKT02026",
       "gameDate": "2026-09-18",
