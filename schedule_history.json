@@ -7525,5 +7525,29 @@
       "statusCode": "RESULT",
       "winner": "HOME"
     }
+  ],
+  "2026-09-17": [
+    {
+      "gameId": "20260917SKNC02026",
+      "homeTeamCode": "NC",
+      "awayTeamCode": "SK",
+      "homeTeamName": "NC",
+      "awayTeamName": "SSG",
+      "homeScore": 1,
+      "awayScore": 2,
+      "statusCode": "RESULT",
+      "winner": "AWAY"
+    },
+    {
+      "gameId": "20260917WOHT02026",
+      "homeTeamCode": "HT",
+      "awayTeamCode": "WO",
+      "homeTeamName": "KIA",
+      "awayTeamName": "키움",
+      "homeScore": 2,
+      "awayScore": 0,
+      "statusCode": "RESULT",
+      "winner": "HOME"
+    }
   ]
 }
