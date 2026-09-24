@@ -7687,5 +7687,40 @@
       "statusCode": "RESULT",
       "winner": "AWAY"
     }
+  ],
+  "2026-09-24": [
+    {
+      "gameId": "20260924LTLG02026",
+      "homeTeamCode": "LG",
+      "awayTeamCode": "LT",
+      "homeTeamName": "LG",
+      "awayTeamName": "롯데",
+      "homeScore": 4,
+      "awayScore": 6,
+      "statusCode": "RESULT",
+      "winner": "AWAY"
+    },
+    {
+      "gameId": "20260924NCKT02026",
+      "homeTeamCode": "KT",
+      "awayTeamCode": "NC",
+      "homeTeamName": "KT",
+      "awayTeamName": "NC",
+      "homeScore": 3,
+      "awayScore": 2,
+      "statusCode": "RESULT",
+      "winner": "HOME"
+    },
+    {
+      "gameId": "20260924SSSK02026",
+      "homeTeamCode": "SK",
+      "awayTeamCode": "SS",
+      "homeTeamName": "SSG",
+      "awayTeamName": "삼성",
+      "homeScore": 4,
+      "awayScore": 5,
+      "statusCode": "RESULT",
+      "winner": "AWAY"
+    }
   ]
 }
