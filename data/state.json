@@ -1,7 +1,7 @@
 {
-  "date": "2026-09-30",
+  "date": "2026-10-01",
   "gameStartNotified": true,
-  "targetTeamResultNotified": true,
-  "allFinishedNotified": true,
-  "lastMagicNumber": 6
+  "targetTeamResultNotified": false,
+  "allFinishedNotified": false,
+  "lastMagicNumber": null
 }
